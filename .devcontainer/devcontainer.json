@@ -1,0 +1,7 @@
+{
+	"name": "SPFx, Azure Functions & PowerShell",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"forwardPorts": [ 7071, 4321, 35729 ]
+}
