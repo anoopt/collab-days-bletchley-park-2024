@@ -15,7 +15,7 @@ RUN mkdir /usr/local/nvm
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 18.12.1
+ENV NODE_VERSION 18.20.4
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
@@ -32,13 +32,13 @@ ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # use a user called spfx with sudo access
-VOLUME /usr/app/spfx
-WORKDIR /usr/app/spfx
-RUN useradd --create-home --shell /bin/bash spfx && \
-    usermod -aG sudo spfx && \
-    chown -R spfx:spfx /usr/app
+# VOLUME /usr/app/spfx
+# WORKDIR /usr/app/spfx
+# RUN useradd --create-home --shell /bin/bash spfx && \
+#     usermod -aG sudo spfx && \
+#     chown -R spfx:spfx /usr/app
 
-USER spfx
+# USER spfx
 
 # Install SPFx development toolchain prerequisites
 RUN npm i --location=global gulp-cli yo @microsoft/generator-sharepoint spfx-fast-serve

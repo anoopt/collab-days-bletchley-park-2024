@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "multilingual-summary-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/multilingualSummary/MultilingualSummaryWebPart.js",
+          "manifest": "./src/webparts/multilingualSummary/MultilingualSummaryWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "MultilingualSummaryWebPartStrings": "lib/webparts/multilingualSummary/loc/{locale}.js"
+  }
+}

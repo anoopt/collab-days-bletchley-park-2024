@@ -1,0 +1,1 @@
+export type LanguageSummary = { language: string, shortSummary: string };
