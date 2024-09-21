@@ -1,0 +1,20 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "powershell",
+    "FUNCTIONS_WORKER_RUNTIME_VERSION": "7.2",
+    "AzureWebJobsStorage": "",
+    "API_Endpoint": "",
+    "API_Key": "",
+    // The below 4 properties are needed ony for local development
+    // START
+    "TENANT_ID": "",
+    "CLIENT_ID": "",
+    "PFX_PATH": "",
+    "PFX_PASSWORD": ""
+    // END
+  },
+  "Host": {
+		"CORS": "*"
+	}
+}

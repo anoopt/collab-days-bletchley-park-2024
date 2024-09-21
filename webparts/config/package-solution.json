@@ -9,7 +9,7 @@
     "isDomainIsolated": false,
     "webApiPermissionRequests": [
       {
-        "resource": "CSOM Tests",
+        "resource": "APP_REG_NAME",
         "scope": "user_impersonation"
       },
       {
