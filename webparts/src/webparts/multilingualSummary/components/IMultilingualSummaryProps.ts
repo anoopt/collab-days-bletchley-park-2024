@@ -7,4 +7,6 @@ export interface IMultilingualSummaryProps {
   pageId: string;
   siteId: string;
   siteUrl: string;
+  languages: string[];
+  refreshSummary?: boolean;
 }

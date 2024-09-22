@@ -56,8 +56,8 @@ export const useAzureFunctions = (aadHttpClientFactory: AadHttpClientFactory) =>
     );
 
     const getSummaryUsingOpenAI = React.useCallback(
-        async (content: string) => {
-            return await callAzureFunction(AZURE_FUNCTION_SUMMARISE, { content });
+        async (content: string, languages: string) => {
+            return await callAzureFunction(AZURE_FUNCTION_SUMMARISE, { content, languages });
         },
         [callAzureFunction]
     );

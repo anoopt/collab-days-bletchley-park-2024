@@ -8,12 +8,16 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import MultilingualSummary from './components/MultilingualSummary';
 import { IMultilingualSummaryProps } from './components/IMultilingualSummaryProps';
+import { MultilingualSummaryPropertyPane } from './MultilingualSummaryPropertyPane';
 
 export interface IMultilingualSummaryWebPartProps {
-  description: string;
+  languages: string[];
 }
 
 export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IMultilingualSummaryWebPartProps> {
+
+  private _deferredPropertyPane: MultilingualSummaryPropertyPane;
+  private refreshSummary: boolean = false;
 
   public render(): void {
 
@@ -27,7 +31,9 @@ export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IM
         pageItemId: listItem.id,
         pageId: listItem.uniqueId,
         siteId: this.context.pageContext.site.id.toString(),
-        siteUrl: this.context.pageContext.site.absoluteUrl
+        siteUrl: this.context.pageContext.site.absoluteUrl,
+        languages: this.properties.languages,
+        refreshSummary: this.refreshSummary
       }
     );
     
@@ -35,10 +41,13 @@ export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IM
   }
 
   protected async onInit(): Promise<void> {
-    
-    // If you want to use the services instead of hooks, you can use the following:
-    // await azurefunctions.Init(this.context.aadHttpClientFactory, APP_ID);
-    // await MicrosoftGraph.Init(this.context.msGraphClientFactory);
+
+    // check if query string refreshSummary is set to true
+    // if so, set the refreshSummary flag to true
+    const queryString = new URLSearchParams(window.location.search);
+    if (queryString.get('refreshSummary') === 'true') {
+      this.refreshSummary = true;
+    }
 
     return super.onInit();
   }
@@ -51,9 +60,19 @@ export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IM
     return Version.parse('1.0');
   }
 
+  protected loadPropertyPaneResources(): Promise<void> {
+    return import(
+      /* webpackChunkName: 'MultilingualSummary-property-pane'*/
+      './MultilingualSummaryPropertyPane'
+    )
+      .then(
+        (component) => {
+          this._deferredPropertyPane = new component.MultilingualSummaryPropertyPane();
+        }
+      );
+  }
+
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
-    return {
-      pages: []
-    };
+    return this._deferredPropertyPane?.getPropertyPaneConfiguration(this.properties, this.context, this.onPropertyPaneFieldChanged.bind(this));
   }
 }

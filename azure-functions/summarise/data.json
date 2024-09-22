@@ -5,7 +5,7 @@
             "content": [
                 {
                     "type": "text",
-                    "text": "You are a helpful translator."
+                    "text": "You are a helpful translator who is asked to provide a short summary of 1 sentence in {{languages}} of the following text:"
                 }
             ]
         },
@@ -14,7 +14,7 @@
             "content": [
                 {
                     "type": "text",
-                    "text": "1 short sentence summary in English, French and Spanish of this: {{content}}"
+                    "text": "{{content}}"
                 }
             ]
         }
@@ -38,7 +38,8 @@
                             "type": "object",
                             "properties": {
                                 "language": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "The full language name in English, e.g. 'French'"
                                 },
                                 "shortSummary": {
                                     "type": "string"

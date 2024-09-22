@@ -6,9 +6,15 @@ param($Request, $TriggerMetadata)
 function Get-Summary {
 
     $content = $Request.Body.content;
+    $languages = $Request.Body.languages;
+
+    if (-not $languages) {
+        $languages = "English";
+    }
 
     $json = Get-Content -Path "$($PSScriptRoot)\data.json" -Raw
     $json = $json -replace "{{content}}", $content
+    $json = $json -replace "{{languages}}", $languages
 
     $uri = $env:API_Endpoint
     $api_key = $env:API_Key
@@ -22,7 +28,7 @@ function Get-Summary {
 
     if ($response -and $response.StatusCode -eq 200) {
         $summaries = $response.Content | ConvertFrom-Json | Select-Object -ExpandProperty choices | Select-Object -ExpandProperty message | Select-Object -ExpandProperty content | ConvertFrom-Json | Select-Object -ExpandProperty summaries;
-        return $summaries | ConvertTo-Json;
+        return $summaries | ConvertTo-Json -AsArray;
     }
     else {
         Write-Host "Error calling API";

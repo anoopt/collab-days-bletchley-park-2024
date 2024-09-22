@@ -92,8 +92,11 @@ const MultilingualSummary: React.FC<IMultilingualSummaryProps> = (props) => {
     // clean the page content
     pageContent = cleanPageContent(pageContent);
 
+    // join languages with comma and use and as the last separator
+    const languages = props.languages.join(', ').replace(/,([^,]*)$/, ' and$1');
+
     // get summary from OpenAI
-    const summary = await getSummaryUsingOpenAI(pageContent);
+    const summary = await getSummaryUsingOpenAI(pageContent, languages);
 
     // if summary is empty, return
     if (isEmpty(summary)) {
@@ -104,7 +107,12 @@ const MultilingualSummary: React.FC<IMultilingualSummaryProps> = (props) => {
   };
 
   const executeSummaryTasksAndUpdatePage = async (): Promise<void> => {
-    let summary: LanguageSummary[] | null = await getSummaryFromPage();
+    let summary: LanguageSummary[] | null = null;
+
+    if (!props.refreshSummary) {
+      summary = await getSummaryFromPage();
+    }
+    
     if (summary === null) {
       summary = await getSummaryFromAPI();
 
