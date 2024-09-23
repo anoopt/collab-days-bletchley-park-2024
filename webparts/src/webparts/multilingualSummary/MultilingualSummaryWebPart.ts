@@ -33,7 +33,8 @@ export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IM
         siteId: this.context.pageContext.site.id.toString(),
         siteUrl: this.context.pageContext.site.absoluteUrl,
         languages: this.properties.languages,
-        refreshSummary: this.refreshSummary
+        refreshSummary: this.refreshSummary,
+        inEditMode: this.displayMode === 2
       }
     );
     
@@ -47,6 +48,11 @@ export default class MultilingualSummaryWebPart extends BaseClientSideWebPart<IM
     const queryString = new URLSearchParams(window.location.search);
     if (queryString.get('refreshSummary') === 'true') {
       this.refreshSummary = true;
+    }
+
+    // if the languages property is not set, set it to English
+    if (!this.properties.languages) {
+      this.properties.languages = ['English'];
     }
 
     return super.onInit();

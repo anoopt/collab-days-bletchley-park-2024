@@ -109,6 +109,10 @@ const MultilingualSummary: React.FC<IMultilingualSummaryProps> = (props) => {
   const executeSummaryTasksAndUpdatePage = async (): Promise<void> => {
     let summary: LanguageSummary[] | null = null;
 
+    if (props.inEditMode) {
+      return;
+    }
+
     if (!props.refreshSummary) {
       summary = await getSummaryFromPage();
     }
@@ -121,6 +125,7 @@ const MultilingualSummary: React.FC<IMultilingualSummaryProps> = (props) => {
         await updatePagePnPPowerShell(siteUrl, pageItemId, SUMMARY_COLUMN_NAME, JSON.stringify(summary));
       }
     }
+
     // covertSummaryToSentences(summary);
     setSentences(summary);
   };

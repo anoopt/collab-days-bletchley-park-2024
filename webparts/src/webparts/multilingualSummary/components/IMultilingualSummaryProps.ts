@@ -9,4 +9,5 @@ export interface IMultilingualSummaryProps {
   siteUrl: string;
   languages: string[];
   refreshSummary?: boolean;
+  inEditMode?:boolean;
 }
